@@ -26,6 +26,10 @@ def handle_client(client):
             del clients[client]
             broadcast(bytes("%s ha abbandonato la chat. " % nome, "utf8"))
             break
+        
+def broadcast(msg, prefisso=""):
+    for user in clients:
+        user.send(bytes(prefisso,"utf8") + msg)
 
 clients = {}
 indirizzi = {}
@@ -38,3 +42,11 @@ ADDR = (HOST,PORT)
 
 SERVER = socket(AF_INET,SOCK_STREAM)
 SERVER.bind(ADDR)
+
+if __name__ == "__main__":
+    SERVER.listen(5)
+    print("Waiting for connections... ")
+    ACCEPT_THREAD = Thread(target=accept_connection)
+    ACCEPT_THREAD.start()
+    ACCEPT_THREAD.join()
+    SERVER.close()
