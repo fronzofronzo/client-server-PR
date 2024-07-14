@@ -12,7 +12,7 @@ def accept_connection():
 def handle_client(client):
     try: 
         nome = client.recv(BUFSIZ).decode("utf8")
-        benvenuto = "Welcome %s: if you want left the chat, digita {quit} " % nome
+        benvenuto = "Welcome %s: if you want left the chat, write {quit} " % nome
         client.send(bytes(benvenuto,"utf8"))
         msg_br = "User %s has joined the chat " % nome
         broadcast(bytes(msg_br, "utf8"))
